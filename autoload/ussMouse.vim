@@ -28,8 +28,7 @@ endfunction
 function! s:enter_insert() abort
     if(s:is_terminal_buffer() && !has('nvim'))
         norm i
-    endif
-    if col('.') == col('$') - 1
+    elseif col('.') == col('$') - 1
         startinsert!
     else
         startinsert
