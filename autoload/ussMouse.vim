@@ -10,7 +10,7 @@ function! ussMouse#EnterInsert() abort
 endfunction
 
 function! s:should_enter_insert() abort
-    return s:is_not_visual_mode() && (s:is_not_terminal_buffer() || s:is_last_line_of_buffer_visible())
+    return s:is_not_visual_mode() && (!s:is_terminal_buffer() || s:is_last_line_of_buffer_visible())
 endfunction
 
 function! s:is_not_visual_mode() abort
@@ -21,11 +21,14 @@ function! s:is_last_line_of_buffer_visible() abort
     return line('w$') >= line('$')
 endfunction
 
-function! s:is_not_terminal_buffer() abort
-    return getbufvar(bufname("%"), "&buftype", "NONE") != "terminal" 
+function! s:is_terminal_buffer() abort
+    return getbufvar(bufname("%"), "&buftype", "NONE") == "terminal" 
 endfunction
 
 function! s:enter_insert() abort
+    if(s:is_terminal_buffer() && !has('nvim'))
+        norm i
+    endif
     if col('.') == col('$') - 1
         startinsert!
     else
