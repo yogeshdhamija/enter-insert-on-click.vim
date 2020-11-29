@@ -1,9 +1,9 @@
-if(exists("g:autoloaded_uss_mouse"))
+if(exists("g:autoloaded_enter_insert_on_click"))
     finish
 endif
-let g:autoloaded_uss_mouse = 1
+let g:autoloaded_enter_insert_on_click = 1
 
-function! ussMouse#EnterInsert() abort
+function! enterInsertOnClick#EnterInsert() abort
     if s:should_enter_insert() 
         call s:enter_insert()
     endif
